@@ -1,0 +1,134 @@
+{
+  "name": "ide-marksman",
+  "author": "lumine-code",
+  "description": "Marksman language-server adapter for Markdown.",
+  "repository": "https://github.com/lumine-code/ide-marksman",
+  "bugs": {
+    "url": "https://github.com/lumine-code/ide-marksman/issues"
+  },
+  "keywords": [
+    "language-server",
+    "lsp",
+    "markdown",
+    "wiki-links",
+    "zettelkasten",
+    "notes",
+    "intellisense"
+  ],
+  "version": "1.0.0",
+  "license": "MIT",
+  "engines": {
+    "lumine": "^1.0.0"
+  },
+  "backgroundTips": [
+    "{{packageName}} provides link completion, navigation, references, and refactoring whenever Markdown is open."
+  ],
+  "main": "./lib/main",
+  "files": [
+    "lib",
+    "spec"
+  ],
+  "scripts": {
+    "test": "lumine --test spec",
+    "lint": "eslint . --max-warnings 0",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "consumedServices": {
+    "ide-client": {
+      "versions": {
+        "^1.0.0": "consumeIdeClient"
+      }
+    }
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-n": "^18.2.2",
+    "globals": "^17.9.0",
+    "prettier": "^3.9.6",
+    "vscode-jsonrpc": "^9.0.1"
+  },
+  "configSchema": {
+    "serverPath": {
+      "title": "Server Path",
+      "description": "Absolute path to a `marksman` executable. Leave empty to use the copy the editor installed, or the one on PATH.",
+      "type": "string",
+      "default": ""
+    },
+    "features": {
+      "title": "Features",
+      "description": "Which parts of Marksman the editor uses. Turning one off hands it to the next server serving the same file.",
+      "type": "object",
+      "properties": {
+        "diagnostics": {
+          "title": "Diagnostics",
+          "description": "Report broken, ambiguous, and duplicate wiki-link targets.",
+          "type": "boolean",
+          "default": true
+        },
+        "autocomplete": {
+          "title": "Autocomplete",
+          "description": "Complete Markdown links, reference links, wiki links, documents, and headings.",
+          "type": "boolean",
+          "default": true
+        },
+        "hover": {
+          "title": "Hover",
+          "description": "Preview the document or heading targeted by a link.",
+          "type": "boolean",
+          "default": true
+        },
+        "definition": {
+          "title": "Go To Definition",
+          "description": "Jump from links and references to their targets.",
+          "type": "boolean",
+          "default": true
+        },
+        "references": {
+          "title": "Find References",
+          "description": "List links that refer to a document or heading.",
+          "type": "boolean",
+          "default": true
+        },
+        "symbols": {
+          "title": "Symbols",
+          "description": "Serve document and project headings to go-to-symbol.",
+          "type": "boolean",
+          "default": true
+        },
+        "outline": {
+          "title": "Outline",
+          "description": "Fill the outline panel with the document's heading hierarchy.",
+          "type": "boolean",
+          "default": true
+        },
+        "rename": {
+          "title": "Rename",
+          "description": "Rename documents and headings together with the links that target them.",
+          "type": "boolean",
+          "default": true
+        },
+        "codeActions": {
+          "title": "Code Actions",
+          "description": "Create or update a table of contents and create missing linked documents.",
+          "type": "boolean",
+          "default": true
+        },
+        "codeLens": {
+          "title": "Code Lens",
+          "description": "Show the number of references above each heading.",
+          "type": "boolean",
+          "default": true
+        },
+        "semanticTokens": {
+          "title": "Semantic Tokens",
+          "description": "Apply server-computed highlighting to link destinations and headings.",
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}
