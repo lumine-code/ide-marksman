@@ -1,0 +1,139 @@
+{
+  "name": "ide-marksman full feature matrix",
+  "adapter": "ide-marksman",
+  "project": "fixtures/drive",
+  "file": "fixtures/drive/index.md",
+  "grammarScope": "source.gfm",
+  "checks": [
+    {
+      "name": "diagnostics",
+      "kind": "diagnostics",
+      "minLength": 1,
+      "expect": { "path": "*.code", "includes": "2" }
+    },
+    {
+      "name": "wiki completion",
+      "method": "textDocument/completion",
+      "position": [14, 28],
+      "params": { "context": { "triggerKind": 1 } },
+      "expect": { "path": "items.*.label", "includes": "Target Note" }
+    },
+    {
+      "name": "hover preview",
+      "method": "textDocument/hover",
+      "position": [6, 8],
+      "expect": { "path": "contents.value", "matches": "# Target Note" }
+    },
+    {
+      "name": "definition",
+      "method": "textDocument/definition",
+      "position": [6, 8],
+      "expect": { "path": "uri", "matches": "target\\.md$" }
+    },
+    {
+      "name": "references",
+      "method": "textDocument/references",
+      "position": [0, 3],
+      "params": { "context": { "includeDeclaration": true } },
+      "paramsFrom": {
+        "textDocument.uri": { "check": "definition", "path": "uri" }
+      },
+      "expect": { "type": "array", "minLength": 4 }
+    },
+    {
+      "name": "document symbols",
+      "method": "textDocument/documentSymbol",
+      "expect": { "path": "0.children.*.name", "includes": "Tasks" }
+    },
+    {
+      "name": "workspace symbols",
+      "method": "workspace/symbol",
+      "document": false,
+      "params": { "query": "Target" },
+      "expect": { "path": "*.name", "includes": "H1: Target Note" }
+    },
+    {
+      "name": "prepare rename",
+      "method": "textDocument/prepareRename",
+      "position": [0, 3],
+      "paramsFrom": {
+        "textDocument.uri": { "check": "definition", "path": "uri" }
+      },
+      "expect": { "path": "start.character", "equals": 2 }
+    },
+    {
+      "name": "rename",
+      "method": "textDocument/rename",
+      "position": [0, 3],
+      "params": { "newName": "Renamed Note" },
+      "paramsFrom": {
+        "textDocument.uri": { "check": "definition", "path": "uri" }
+      },
+      "expect": { "path": "documentChanges", "type": "array", "minLength": 2 }
+    },
+    {
+      "name": "code actions",
+      "method": "textDocument/codeAction",
+      "paramsFrom": {
+        "range": { "check": "diagnostics", "path": "0.range" },
+        "context.diagnostics": { "check": "diagnostics", "path": "$" }
+      },
+      "expect": { "path": "*.title", "includes": "Create `Missing Note.md`" }
+    },
+    {
+      "name": "table of contents action",
+      "method": "textDocument/codeAction",
+      "params": {
+        "range": {
+          "start": { "line": 4, "character": 0 },
+          "end": { "line": 4, "character": 11 }
+        },
+        "context": { "diagnostics": [] }
+      },
+      "expect": { "path": "*.title", "includes": "Create a Table of Contents" }
+    },
+    {
+      "name": "code lenses",
+      "method": "textDocument/codeLens",
+      "paramsFrom": {
+        "textDocument.uri": { "check": "definition", "path": "uri" }
+      },
+      "expect": { "path": "*.command.title", "includes": "3 references" }
+    },
+    {
+      "name": "execute code lens",
+      "method": "workspace/executeCommand",
+      "document": false,
+      "paramsFrom": {
+        "$": {
+          "check": "code lenses",
+          "path": "$",
+          "find": { "path": "command.title", "equals": "3 references" },
+          "select": "command"
+        }
+      },
+      "expect": { "equals": 0 }
+    },
+    {
+      "name": "semantic tokens",
+      "method": "textDocument/semanticTokens/full",
+      "expect": { "path": "data", "type": "array", "minLength": 15 }
+    },
+    {
+      "name": "semantic token range",
+      "method": "textDocument/semanticTokens/range",
+      "params": {
+        "range": {
+          "start": { "line": 6, "character": 0 },
+          "end": { "line": 9, "character": 0 }
+        }
+      },
+      "expect": { "path": "data", "type": "array", "minLength": 10 }
+    },
+    {
+      "name": "restart lifecycle",
+      "kind": "restart",
+      "expect": { "path": "current", "equals": "running" }
+    }
+  ]
+}
