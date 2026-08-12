@@ -19,6 +19,14 @@ const registerAdapter = () => {
   return { adapter, disposable };
 };
 
+// Marksman is a third-party binary rather than an npm dependency, so it is on
+// PATH only where something put it there: this package's own CI installs it and
+// runs everything below for real, while the fleet sweep provides an editor and
+// npm and nothing else. Pend there instead of failing — a suite that cannot
+// reach the server is no evidence the adapter is broken — and name what is
+// missing, so a pending run is never read as a passing one.
+const serverPath = process.env.MARKSMAN_PATH || findOnPath("marksman");
+
 describe("ide-marksman official server", () => {
   let adapter, client, disposable, rootPath, indexSource, indexUri, targetUri;
   let originalTimeout;
@@ -34,8 +42,9 @@ describe("ide-marksman official server", () => {
 
   beforeEach(async () => {
     jasmine.useRealClock();
-    const serverPath = process.env.MARKSMAN_PATH || findOnPath("marksman");
-    if (!serverPath) throw new Error("Set MARKSMAN_PATH or install marksman on PATH");
+    if (!serverPath) {
+      pending("marksman is not on PATH; install it or set MARKSMAN_PATH to run the live suite");
+    }
     await lumine.packages.activatePackage("ide-marksman");
     lumine.config.set("ide-marksman.serverPath", serverPath);
     ({ adapter, disposable } = registerAdapter());
@@ -51,6 +60,8 @@ describe("ide-marksman official server", () => {
   });
 
   afterEach(async () => {
+    // beforeEach pends before any of this exists, and afterEach runs anyway.
+    if (!client) return;
     await client.stop();
     disposable.dispose();
     lumine.config.unset("ide-marksman.serverPath");
