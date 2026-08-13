@@ -132,28 +132,32 @@ describe("ide-marksman adapter", () => {
     expect(restart).toHaveBeenCalledOnceWith(live);
   });
 
-  it("offers the managed install when no executable can be found", async () => {
+  it("asks the hub to report a missing executable rather than notifying itself", async () => {
+    // The wording, the once-per-window dedupe, the Install button and the
+    // Never Ask Again opt-out all live in ide-client, so what this package owes
+    // is the call and the reason — not a notification of its own.
     const originalPath = process.env.PATH;
-    const addError = spyOn(lumine.notifications, "addError");
-    const installServer = jasmine.createSpy("installServer").and.returnValue(Promise.resolve());
+    const reportMissingServer = jasmine.createSpy("reportMissingServer");
     disposable.dispose();
-    ({ adapter, disposable } = registerAdapter({ installServer }));
+    ({ adapter, disposable } = registerAdapter({ reportMissingServer }));
     try {
       process.env.PATH = "";
       expect(await adapter.resolveServer({ rootPath: __dirname, managedServer: null })).toBeNull();
-      expect(addError).toHaveBeenCalled();
-      const options = addError.calls.mostRecent().args[1];
-      expect(options.buttons[0].text).toBe("Install Marksman");
-      options.buttons[0].onDidClick();
-      await Promise.resolve();
-      expect(installServer).toHaveBeenCalledOnceWith("ide-marksman");
+      expect(reportMissingServer).toHaveBeenCalledTimes(1);
+      const [adapterId, options] = reportMissingServer.calls.mostRecent().args;
+      expect(adapterId).toBe("ide-marksman");
+      expect(options.description).toContain("marksman");
     } finally {
       process.env.PATH = originalPath;
-      await adapter.resolveServer({
-        rootPath: __dirname,
-        managedServer: { binaryPath: process.execPath, version: "test" },
-      });
     }
+  });
+
+  it("declares the setting the opt-out writes to", () => {
+    // Never Ask Again sets `<id>.notifyWhenMissing`; without the schema entry
+    // there would be no way to turn the notice back on.
+    const entry = require("../package.json").configSchema.notifyWhenMissing;
+    expect(entry.type).toBe("boolean");
+    expect(entry.default).toBe(true);
   });
 
   it("declares switches for exactly the features Marksman advertises", () => {
