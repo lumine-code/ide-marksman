@@ -66,71 +66,83 @@
     "features": {
       "title": "Features",
       "description": "Which parts of Marksman the editor uses. Turning one off hands it to the next server serving the same file.",
+      "scopeResolution": "grammar",
       "type": "object",
       "properties": {
         "diagnostics": {
           "title": "Diagnostics",
           "description": "Report broken, ambiguous, and duplicate wiki-link targets.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "autocomplete": {
           "title": "Autocomplete",
           "description": "Complete Markdown links, reference links, wiki links, documents, and headings.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "hover": {
           "title": "Hover",
           "description": "Preview the document or heading targeted by a link.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "definition": {
           "title": "Go To Definition",
           "description": "Jump from links and references to their targets.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "references": {
           "title": "Find References",
           "description": "List links that refer to a document or heading.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "symbols": {
           "title": "Symbols",
           "description": "Serve document and project headings to go-to-symbol.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "outline": {
           "title": "Outline",
           "description": "Fill the outline panel with the document's heading hierarchy.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "rename": {
           "title": "Rename",
           "description": "Rename documents and headings together with the links that target them.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "codeActions": {
           "title": "Code Actions",
           "description": "Create or update a table of contents and create missing linked documents.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "codeLens": {
           "title": "Code Lens",
           "description": "Show the number of references above each heading.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         },
         "semanticTokens": {
           "title": "Semantic Tokens",
           "description": "Apply server-computed highlighting to link destinations and headings.",
+          "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
         }
