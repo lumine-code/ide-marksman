@@ -9,7 +9,6 @@ const FEATURES = [
   "definition",
   "references",
   "symbols",
-  "outline",
   "rename",
   "codeActions",
   "codeLens",

@@ -106,14 +106,7 @@
         },
         "symbols": {
           "title": "Symbols",
-          "description": "Serve document and project headings to go-to-symbol.",
-          "scopeResolution": "grammar",
-          "type": "boolean",
-          "default": true
-        },
-        "outline": {
-          "title": "Outline",
-          "description": "Fill the outline panel with the document's heading hierarchy.",
+          "description": "Serve document and project headings to navigation features.",
           "scopeResolution": "grammar",
           "type": "boolean",
           "default": true
