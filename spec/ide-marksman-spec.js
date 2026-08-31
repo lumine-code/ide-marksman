@@ -95,6 +95,7 @@ describe("ide-marksman adapter", () => {
     expect(adapter.grammarScopes).toEqual(["source.gfm"]);
     expect(adapter.languageId).toBe("markdown");
     expect(adapter.sessionScope).toBe("project-root");
+    expect(adapter.restartKeyPaths).toEqual(["ide-marksman.serverPath"]);
     expect(adapter.managedServer).toBe(managedServer);
   });
 
@@ -110,25 +111,6 @@ describe("ide-marksman adapter", () => {
       cwd: __dirname,
       transport: "stdio",
     });
-  });
-
-  it("restarts only its live sessions when the executable changes", async () => {
-    disposable.dispose();
-    const live = { adapter: null, state: "running" };
-    const stopped = { adapter: null, state: "stopped" };
-    const other = { adapter: {}, state: "running" };
-    const restart = jasmine.createSpy("restart").and.returnValue(Promise.resolve());
-    ({ adapter, disposable } = registerAdapter({
-      getSessions: () => [live, stopped, other],
-      restart,
-    }));
-    live.adapter = adapter;
-    stopped.adapter = adapter;
-
-    lumine.config.set("ide-marksman.serverPath", process.execPath);
-    await Promise.resolve();
-
-    expect(restart).toHaveBeenCalledOnceWith(live);
   });
 
   it("asks the hub to report a missing executable rather than notifying itself", async () => {
