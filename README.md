@@ -13,7 +13,9 @@ Marksman language-server adapter for Markdown.
 
 ## Installation
 
-Install `ide-client` first. Then install `ide-marksman` from the Install pane of the Lumine settings, or run `lumine --install lumine-code/ide-marksman`.
+To install `ide-marksman` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/ide-marksman`.
+
+Install `ide-client` first.
 
 ## Usage
 
