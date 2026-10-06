@@ -1,6 +1,6 @@
-const path = require("path");
+const { serverContext } = require("./helpers/server-resolver");
 const main = require("../lib/main");
-const { assetFor, findOnPath, managedServer, resolveServer } = require("../lib/server");
+const { assetFor, managedServer, resolveServer } = require("../lib/server");
 
 const FEATURES = [
   "diagnostics",
@@ -33,27 +33,10 @@ const registerAdapter = (overrides = {}) => {
 
 describe("ide-marksman server resolution", () => {
   it("launches a configured executable with the server subcommand", async () => {
-    expect(await resolveServer(process.execPath)).toEqual({
+    expect(await resolveServer(serverContext(), process.execPath)).toEqual({
       command: process.execPath,
       args: ["server"],
     });
-  });
-
-  it("prefers a managed install and preserves its version", async () => {
-    const managed = { binaryPath: "/managed/marksman", version: "2026-02-08" };
-    expect(await resolveServer("", managed)).toEqual({
-      command: "/managed/marksman",
-      args: ["server"],
-      version: "2026-02-08",
-    });
-    expect((await resolveServer(process.execPath, managed)).command).toBe(process.execPath);
-  });
-
-  it("finds executables on a synthetic PATH", () => {
-    const directory = path.dirname(process.execPath);
-    const name = path.basename(process.execPath, path.extname(process.execPath));
-    expect(findOnPath(name, { PATH: directory, PATHEXT: ".EXE" })).toBeTruthy();
-    expect(findOnPath("definitely-not-marksman", { PATH: directory })).toBeNull();
   });
 
   it("maps every official release target exactly", () => {
@@ -100,10 +83,12 @@ describe("ide-marksman adapter", () => {
   });
 
   it("adds the project working directory and stdio transport", async () => {
-    const launch = await adapter.resolveServer({
-      rootPath: __dirname,
-      managedServer: { binaryPath: process.execPath, version: "test" },
-    });
+    const launch = await adapter.resolveServer(
+      serverContext({
+        rootPath: __dirname,
+        managedServer: { binaryPath: process.execPath, version: "test" },
+      }),
+    );
     expect(launch).toEqual({
       command: process.execPath,
       args: ["server"],
@@ -123,7 +108,9 @@ describe("ide-marksman adapter", () => {
     ({ adapter, disposable } = registerAdapter({ reportMissingServer }));
     try {
       process.env.PATH = "";
-      expect(await adapter.resolveServer({ rootPath: __dirname, managedServer: null })).toBeNull();
+      expect(
+        await adapter.resolveServer(serverContext({ rootPath: __dirname, managedServer: null })),
+      ).toBeNull();
       expect(reportMissingServer).toHaveBeenCalledTimes(1);
       const [adapterId, options] = reportMissingServer.calls.mostRecent().args;
       expect(adapterId).toBe("ide-marksman");

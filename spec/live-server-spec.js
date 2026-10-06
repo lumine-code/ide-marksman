@@ -2,7 +2,7 @@ const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const main = require("../lib/main");
-const { findOnPath } = require("../lib/server");
+const { findOnPath } = require("./helpers/server-resolver");
 const { LiveLspClient, fileUri, positionParams } = require("./helpers/live-lsp-client");
 
 const registerAdapter = () => {

@@ -1,3 +1,4 @@
+const { serverContext } = require("./server-resolver");
 const childProcess = require("child_process");
 const path = require("path");
 const { pathToFileURL } = require("url");
@@ -91,7 +92,7 @@ class LiveLspClient {
   }
 
   async start() {
-    const launch = await this.adapter.resolveServer({ rootPath: this.rootPath });
+    const launch = await this.adapter.resolveServer(serverContext({ rootPath: this.rootPath }));
     if (!launch) throw new Error("Marksman is not installed on PATH");
     this.child = childProcess.spawn(launch.command, launch.args || [], {
       cwd: launch.cwd || this.rootPath,
