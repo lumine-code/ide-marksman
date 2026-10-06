@@ -1,6 +1,6 @@
 (async () => {
-  const ideClientPackage = lumine.packages.getActivePackage("ide-client");
-  const service = ideClientPackage.mainModule.provideIdeClient();
+  const idePackage = lumine.packages.getActivePackage("ide");
+  const service = idePackage.mainModule.provideIde();
   const result = await service.installServer("ide-marksman");
   const managed = service.managedServer("ide-marksman");
   const sessions = service.getSessions().map((session) => ({

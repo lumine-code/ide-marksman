@@ -27,7 +27,7 @@ const registerAdapter = (overrides = {}) => {
     installServer: async () => {},
     ...overrides,
   };
-  const disposable = main.consumeIdeClient(service);
+  const disposable = main.consumeIde(service);
   return { adapter, disposable, service };
 };
 
@@ -100,7 +100,7 @@ describe("ide-marksman adapter", () => {
 
   it("asks the hub to report a missing executable rather than notifying itself", async () => {
     // The wording, the once-per-window dedupe, the Install button and the
-    // Never Ask Again opt-out all live in ide-client, so what this package owes
+    // Never Ask Again opt-out all live in ide, so what this package owes
     // is the call and the reason — not a notification of its own.
     const originalPath = process.env.PATH;
     const reportMissingServer = jasmine.createSpy("reportMissingServer");
