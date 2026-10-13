@@ -1,0 +1,16 @@
+{
+  "title": "ide-marksman",
+  "description": "Marksman detects a document link whose target does not exist.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "352e5f912da54da4446fd23f3c672f35bf99e67c",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Marksman detects a document link whose target does not exist.",
+      "width": 1100,
+      "height": 490
+    }
+  ]
+}

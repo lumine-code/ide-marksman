@@ -11,6 +11,8 @@ Marksman language-server adapter for Markdown.
 - **Actions and lenses**: manages tables of contents, creates linked documents, and counts heading references.
 - **Managed server**: installs the official platform binary or uses an executable from settings or `PATH`.
 
+![Marksman detects a document link whose target does not exist.](.github/demo.png)
+
 ## Installation
 
 To install `ide-marksman` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/ide-marksman`.
