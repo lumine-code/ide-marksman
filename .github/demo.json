@@ -1,16 +1,100 @@
 {
   "title": "ide-marksman",
   "description": "Marksman detects a document link whose target does not exist.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "352e5f912da54da4446fd23f3c672f35bf99e67c",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "f530729b8327e641de5d5459e988b921a45c2cfa",
+  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
   "mode": "normal",
   "fontSettings": "default",
+  "scenario": "demo.js",
+  "recipeHash": "bf27a6e9d4aadd23774d2a47a672c945336ed2a0b7baae228891169a6c4f5b29",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1100, "height": 490 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "d0b1751fffac65f10a405545e5f01cf7ad05c0bb",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "package": {
+      "revision": "f530729b8327e641de5d5459e988b921a45c2cfa",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "ide-marksman": {
+      "revision": "f530729b8327e641de5d5459e988b921a45c2cfa",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "documentation-view": {
+      "revision": "98f00040402867bdd5b046f46fb3cf31eecb17af",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "hover": {
+      "revision": "e126cdb80e5da8701b0e722be787b1cfedde9bed",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "ide": {
+      "revision": "0c1735fefa858a2834213bf6d52db91a3582b828",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "language-gfm": {
+      "revision": "be723ccf806fdd4a2a06638f6e881c09a53b4409",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "linter": {
+      "revision": "9fc80e0296b3af2507e5ff04c7e043a813540245",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "linter-panel": {
+      "revision": "e380022d4df6542bcb57b4337b614c61c86f1d68",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "marker": {
+      "revision": "bb4fc8fec8c9d09fe59db9b0d70352ff33cde8f8",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "one-theme": {
+      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "ide-marksman/.marksman.toml",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "ide-marksman/README.md",
+      "sha256": "47e332f1602b9825906d0be80077c5d13730362238bbb2e629b5aff90229561f"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "Marksman detects a document link whose target does not exist.",
       "width": 1100,
-      "height": 490
+      "height": 490,
+      "sha256": "547990e362933ffb2a2c02859af1e17a2959414af7aa34ba1bffa5c41bc5bb67"
     }
   ]
 }
